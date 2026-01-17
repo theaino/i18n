@@ -26,12 +26,11 @@ func LoadFS(bundleFS fs.FS) (*Bundle, error) {
 		if err != nil {
 			return err
 		}
-		var bundleData map[string]any
-		err = yaml.Unmarshal(data, &bundleData)
+		other, err := ParseBundle(data)
 		if err != nil {
 			return err
 		}
-		bundle.Merge(LoadBundle(bundleData))
+		bundle.Merge(other)
 		return nil
 	})
 	if err != nil {
@@ -51,6 +50,14 @@ func LoadBundle(data map[string]any) *Bundle {
 		}
 	}
 	return bundle
+}
+
+func ParseBundle(data []byte) (*Bundle, error) {
+	var bundleData map[string]any
+	if err := yaml.Unmarshal(data, &bundleData); err != nil {
+		return nil, err
+	}
+	return LoadBundle(bundleData), nil
 }
 
 func (b *Bundle) Merge(other *Bundle) {

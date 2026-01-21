@@ -40,5 +40,9 @@ func walkDict(dict map[string]any, path []string) any {
 	if len(path) == 1 {
 		return dict[path[0]]
 	}
-	return walkDict(dict[path[0]].(map[string]any), path[1:])
+	subDict, ok := dict[path[0]].(map[string]any)
+	if !ok {
+		return nil
+	}
+	return walkDict(subDict, path[1:])
 }

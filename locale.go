@@ -20,6 +20,11 @@ func (l *Locale) T(path string, args ...any) string {
 	return fmt.Sprintf(message, args...)
 }
 
+func (l *Locale) Has(path string) bool {
+	_, ok := l.Value(path).(string)
+	return ok
+}
+
 func (l *Locale) Value(path string) any {
 	return walkDict(l.Messages, pathParts(path))
 }

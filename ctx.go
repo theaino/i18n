@@ -8,6 +8,10 @@ func T(ctx context.Context, path string, args ...any) string {
 	return GetLocale(ctx).T(path, args...)
 }
 
+func Has(ctx context.Context, path string) bool {
+	return GetLocale(ctx).Has(path)
+}
+
 func Value(ctx context.Context, path string) any {
 	return GetLocale(ctx).Value(path)
 }
